@@ -1,0 +1,58 @@
+
+Programming language: Python
+
+--------------
+Code Structure
+--------------
+There are two file:
+1.maxconnect4.py
+It contains main part function. Basically it contains two mode: one-move mode and interactive mode. 
+It contains 
++main function which reads the arguments and redirect to suitalble function according to mode.
++oneMoveMode function which take input file and computer computes the next turns and displays the game borad.
++interactiveMode functions depending who is the next turn is, it goes to humanPlay() or aiPlay().
++humanPlay function which takes the raw int input for the human player and checks wheather it is vaild move and changes the trun to computer.
+
+2.MaxConnect4Game.py
+It contains the all the supporting files that is minmax, alpha-beta, beta-aplha and eval function.
++checkPieceCount function checking if count the number of piece already played
++getPieceCount function returning the total piece of the borad which are occupied
++displayGB function display the game borad
++printGameBoardToFile function for printing the game borad to file
++playPiece function for placing the current player piece in the column
++checkPiece function for checking if the piece is valid or not
++maxVal function for resturing the state for the maximun value
++minVal function for returning the state for the minimun value
++alphaBeta function for alpha beta puring (max val)
++betaAlpha function for beta alpha puring (min val)
++minMax plain min max algorithm
++verticalCheck checking the vertical piece in the row
++horizontalCheck checking for the horizontal piece in the column
++diagonalCheck checking for the diagonal check in the borad
++streakCalc function for checking which type of connectfour goes
++playerEvalCalc calculating the streak for the non computer player
++evalFunc function for the which next color is 
++compEvalCalc calculating the streak for the computer
++evalCalc function for calucating the difference in the steak of computer vs non computer
++changeMove function for changing to next player 
++aiPlay function for computing the computer move
++scoreCount function for returning the score count i.e. fours in a row
+
+------------
+Run the code
+----------------
+Interactive Mode
+----------------
+python maxconnect4.py interactive inputfile.txt computer-next/human-next depth_level
+
+-------------
+One-Move Mode
+-------------
+python maxconnect4.py one-move inputfile.txt outputfile.txt depth_level
+
+References:
+https://github.com/Cledersonbc/tic-tac-toe-minimax
+https://omega.uta.edu/~gopikrishnav/classes/common/4308_5360/slides/Game_Search.pdf
+https://codereview.stackexchange.com/questions/24764/tic-tac-toe-victory-check
+http://aima.cs.berkeley.edu/python/games.html
+https://inventwithpython.com/chapter10.html
