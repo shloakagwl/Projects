@@ -1,0 +1,116 @@
+import RPi.GPIO as GPIO
+import time
+import dht11
+import datetime
+import smtplib
+from email.MIMEMultipart import MIMEMultipart
+from email.MIMEText import MIMEText
+
+
+GPIO.setwarnings(False)
+GPIO.setmode(GPIO.BOARD)
+GPIO.cleanup()
+
+ldrpin = 11
+lamppin = 7
+smpin = 12
+thpin=18
+IRpin1 = 29
+IRpin2 = 31
+IRpin3 = 32
+IRpin4 = 33
+wlpin1=13
+wlpin2=15
+motorpin=37
+
+
+b=0 #notification water level 
+sumtemperature=0
+sumhumidity=0
+
+GPIO.setup(wlpin1, GPIO.IN)
+GPIO.setup(wlpin2, GPIO.IN)
+GPIO.setup(IRpin1, GPIO.IN)
+GPIO.setup(IRpin2, GPIO.IN)
+GPIO.setup(IRpin3, GPIO.IN)
+GPIO.setup(IRpin4, GPIO.IN)
+GPIO.setup(smpin, GPIO.IN)
+GPIO.setup(ldrpin, GPIO.IN)
+GPIO.setup(lamppin, GPIO.OUT)
+GPIO.setup(motorpin, GPIO.OUT)
+GPIO.setup(22, GPIO.IN)
+instance = dht11.DHT11(thpin)
+
+while True:
+    input_event = GPIO.input(ldrpin)
+    input_event_sm = GPIO.input(smpin)
+    print str(input_event)
+    if GPIO.input(22):
+    if GPIO.input(ldrpin):
+        print("Detected")
+        GPIO.output(lamppin, 0)
+    else:
+        print("Low Light Condition")
+         GPIO.output(lamppin, 1)
+    else:
+ GPIO.output(lamppin, 0)
+
+
+    if GPIO.input(smpin):
+        print("DRY DRY")
+        GPIO.output(motorpin, 1)
+    else:
+        print("WET WET")
+        print("Motor Turn OFF")
+        GPIO.output(motorpin, 0)
+        
+    result = instance.read()
+    #if result.is_valid():
+        #print("Last valid input: " + str(datetime.datetime.now()))
+        #print("Temperature: %d C" % result.temperature)
+        #print("Humidity: %d %%" % result.humidity)
+        
+    if GPIO.input(IRpin1):
+        if GPIO.input(IRpin2):
+            if GPIO.input(IRpin3):
+                if GPIO.input(IRpin4):
+                    print("Fourth level")
+                else:
+                    print("Third level")
+            else:
+                print("Second level")
+        else:
+            print("First height")    
+    else:
+        print("Ground level")
+        
+    if GPIO.input(wlpin1):
+        if GPIO.input(wlpin2):
+            print("Water level sufficient : above 70%")
+        else:
+print("Water levelmoderate : above 20%") 
+    else:
+        print("Water level low : below 20% plz refill asap")
+        b=b+1
+if(b>=720):
+  fromaddr = "chilatoplantzo@gmail.com"
+  toaddr = "creativeknight258@gmail.com"
+  msg = MIMEMultipart()
+  msg['From'] = fromaddr
+  msg['To'] = toaddr
+  msg['Subject'] = "URGENT: Water Level"
+
+  body =str("Please Refill water tank " )
+  msg.attach(MIMEText(body, 'plain'))
+ 
+  server = smtplib.SMTP('smtp.gmail.com', 587)
+  server.starttls()
+  server.login(fromaddr, "onetwo345")
+  text = msg.as_string()
+  server.sendmail(fromaddr, toaddr, text)
+  server.quit()
+  b=0
+    
+    time.sleep(0.5)
+    
+GPIO.cleanup()
