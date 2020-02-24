@@ -1,4 +1,13 @@
 Programming Lanugage: Python
-IDE: Anaconda (Spyder)
+IDE used: Anaconda (Spyder)
 
 AI based search algorithm that can find route between any two cities. Implemented uninformed search and informed search with heuristic. For doing this algorithm devised were BF’s, DF’s and A* algorithm.
+
+Steps to execute:
+1. Create obejct file
+	"javac find_route.java"
+2. Run the code
+   Uninformed
+	"java find_route input1.txt Bremen Kassel"
+   Informed
+	"java find_route input1.txt Bremen Kassel h_kassel.txt"
