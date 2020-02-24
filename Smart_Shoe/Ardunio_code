@@ -1,0 +1,136 @@
+
+
+#include <Arduino.h>
+#include <SoftwareSerial.h>
+#include <stdlib.h>
+
+const int xpin = A3;
+const int ypin = A2;
+const int zpin = A1;
+
+SoftwareSerial ser(2, 3);
+
+int dist=0;
+int flag=0;
+
+int skipflag=0;
+int stepcount=0;
+int skipcount=0;
+float calorie_burnt=0;
+float c1=0;
+float c2=0;
+
+void setup() {
+  // enable debug serial
+  Serial.begin(115200);
+  // enable software serial
+  ser.begin(115200);
+}
+
+void loop() {
+
+  float x,y,z;
+  
+  if(abs(analogRead(xpin) - 323)>10 && abs(analogRead(xpin) - 323)<55)
+  {
+    x=float(abs(analogRead(xpin) - 323));
+  }
+  else
+  {
+    x=0;
+  }
+  if(abs(analogRead(ypin) - 323)>10 && (abs(analogRead(ypin) - 323)<55))
+  {
+    y=float(abs(analogRead(ypin) - 323));
+  }
+  else
+  {
+    y=0;
+  }
+  if(abs(analogRead(zpin)-397)>10)
+  {
+    z=float(abs(analogRead(zpin) - 397));
+  }
+  else
+  {
+    z=0;
+  }
+  
+  if(z>0)
+  {
+    if(x==0 && y==0)
+    {
+      if(flag!=1 && z>12)
+      {
+        skipflag=1;
+      }
+    }
+    else if(x>0 || y>0)
+    {
+      if(skipflag!=0)
+      {
+        flag=1;
+      }
+    }
+  }
+  else if(z==0)
+  {
+    if(x==0 && y==0)
+    {
+      if(flag==1)
+      {
+        stepcount++;
+        skipcount--;
+        flag=0;
+      }
+      else if(skipflag==1)
+      {
+        skipcount++;
+        skipflag=0;
+      }
+    }
+  }
+  
+  c1=(stepcount/20.0);
+  c2=(skipcount/5.0);
+  calorie_burnt=c1+c2;
+  
+  Serial.print("\nSteps:");
+  Serial.print(stepcount);
+  Serial.print("\nSkipping:");
+  Serial.print(skipcount);
+  Serial.print("\nCalorie_Burnt:");
+  Serial.print(calorie_burnt);
+  Serial.print("\n");
+  
+  String state1=String(stepcount);
+  String state2=String(skipcount);
+  String state3=String(calorie_burnt);
+  
+  // TCP connection
+  String cmd = "AT+CIPSTART=\"TCP\",\"";
+  cmd += "184.106.153.149";
+  //api of thingspeak server api.thingspeak.com
+  cmd += "\",80";
+  ser.println(cmd);
+  
+  // prepare GET string
+  //Write key of API form Thingspeak
+  String getStr = "GET /update?api_key=2C1LFAUHU0BN86UD";
+  getStr +="&field1=";
+  getStr += String(state1);
+  getStr +="&field2=";
+  getStr += String(state2);
+  getStr +="&field3=";
+  getStr += String(state3);
+  getStr += "\r\n\r\n";
+  // send data length
+  cmd = "AT+CIPSEND=";
+  cmd += String(getStr.length());
+
+  ser.println(cmd);
+  ser.print(getStr);
+  // Serial.print(getStr);
+  // thingspeak needs 10 sec delay between updates
+ // delay(100);
+}
