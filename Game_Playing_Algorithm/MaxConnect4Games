@@ -1,5 +1,4 @@
 '''
-Name: Shloak Agarwal
 Language: Python
 --------------------
 MaxConnect4Game.py contains the minmax, alpha beta, beta aplha and eval functions. it also contains all the required function to calculate the streak of a given function
