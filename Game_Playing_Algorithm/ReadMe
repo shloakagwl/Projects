@@ -1,5 +1,6 @@
 
 Programming language: Python
+IDE: Anaconda (Spyder)
 
 The task is to implement an agent that plays the Max-Connect4 game using search. The game is played on a 6x7 grid, 
 with six rows and seven columns. There are two players, player A (red) and player B (green). The two players take turns 
