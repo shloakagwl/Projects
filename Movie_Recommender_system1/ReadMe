@@ -1,0 +1,8 @@
+Programming Language: python
+IDE: Anaconda (Spyder), Google Colab
+
+PROJECT DESCRIPTION
+The movie recommender systems use two type of filtering approaches, one is content based filtering approach and other is collaborative type filtering approach. The content-based filtering approach is getting recommendation on base of genre or plot of the movies whereas the collabora-tive-based filtering approach uses rating from the users and then recommend movies.
+
+INTRODUCTION
+Now a days the recommendation system is a crucial part of one’s life. At some point each one of us must have won-dered where all the recommendations that Netflix, Ama-zon, Google give us, come from. We often rate products on the internet and all the preferences we express and data we share (explicitly or not), are used by recommender systems to generate, in fact, recommendations. The two main types of recommender systems are either collaborative or con-tent-based filters.
