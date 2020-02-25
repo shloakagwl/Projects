@@ -1,4 +1,5 @@
 Programming Lanugage: Java
+IDE used: Eclipse
 
 AI based search algorithm that can find route between any two cities. Implemented uninformed search and informed search with heuristic. For doing this algorithm devised were BF’s, DF’s and A* algorithm.
 
