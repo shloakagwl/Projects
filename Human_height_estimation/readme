@@ -1,0 +1,7 @@
+Language: Python, NumPy, OpenCV
+IDE: Sublime, CMD
+
+ML based project to estimate the height of human in a video surveillance using the tilt angle feature.
+Image per frame were resize to 400x400 greyscale, then pass to HOG descriptor with SVM for classification. 
+Image preprocessing was done to get the detection as accurate as possible. 
+With help of geometric and trigonometric formula, tilted image was transformed to zero angle plane image depending upon parameters (reference height, detected pixel height and display resolution).
