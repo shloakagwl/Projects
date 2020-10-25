@@ -1,0 +1,42 @@
+Given a non-empty integer array of size n, find the minimum number of moves required to make all array elements equal, where a move is incrementing n - 1 elements by 1.
+
+Input:
+[1,2,3]
+
+Output:
+3
+
+Explanation:
+Only three moves are needed (remember each move increments two elements):
+
+[1,2,3]  =>  [2,3,3]  =>  [3,4,3]  =>  [4,4,4]
+
+Time Complexity: O(n); n is lenght of list
+
+Explanation:
+The key to understanding this solution is to first understand that for the purposes of finding m, the following are equivalent:
+
+APPROACH #1: iteratively incrementing all items in the list except for the max item until all items have the same value (which may or may not be the original list's maximum value); and
+APPROACH #2: iteratively decrementing the max item in the list until all items have the same value (which will be guaranteed to be the original list's minimum value).
+
+The first approach of incrementing the values (how the problem is actually presented in the problem statement) is more challenging to structure and solve mathematically, but if you insist on seeing it, here is how to structure it. Otherwise, skip to the next section to see how, based on the above equivalence, you can invert the problem to solve it much easier. Here is the more difficult solution:
+
+APPROACH # 1 - INCREMENTING:
+Assuming n = number of moves required and t is the target value that all elements will be equal to, once the iteration process is complete, then:
+# sum(nums) + n * (len(nums) - 1) = t * len(nums)
+# Explanation: the sum of the original list + the sum of all values added to the list is equal to the sum of the finished list
+Solving for n, we get:
+# n = (t * len(nums) - sum(nums)) / (len(nums) - 1)
+Solving for t, we get:
+# t = (sum(nums) + n * (len(nums) - 1) ) / len(nums)
+Still we have two unknown variables and no obvious way to reduce the problem
+
+Inverse problem space:
+APPROACH # 2 - DECREMENTING:
+# sum(nums) - n * 1 = t * len(nums)
+# Explanation: the sum of the original list minus all the decrements required to make all values the same is equal to the sum of the finished list
+This looks way easier, but upon further inspection, it gets even easier, because we already know t; t is equal to the current minimum element, t = min(nums), so replacing that, we get:
+# sum(nums) - n = min(nums) * len(nums)
+Solving for n, we get:
+# n = sum(nums) - min(nums) * len(nums)
+
