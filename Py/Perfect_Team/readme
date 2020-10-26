@@ -1,0 +1,4 @@
+A school is holding a contest to test the knowledge of its students. A team of five students is formed and each student is skilled in one of the five subjects that the school offers. The subject's that are taught at the school are physics(p), chemistry(c), math(m), botany(b), zoology(z). Each team can have five students, a student can't be on two teams, and only one person per subject per team. So there can't be two people who are good at physics on the team.
+
+My tasks is, that given a string which pertaining to a list of students identified purely by there skill in a subject determine how many teams can be formed.
+
